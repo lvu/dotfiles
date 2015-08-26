@@ -1,0 +1,4 @@
+--pager=less -r
+--context=3
+--ignore-dir=.ropeproject
+--ignore-file=ext:log
