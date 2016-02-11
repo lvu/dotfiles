@@ -20,6 +20,8 @@ filetype plugin indent on     " required!
 set backup
 set hidden
 set spell spelllang=en_us
+set expandtab
+set shiftwidth=4
 colorscheme peachpuff
 
 if &t_Co > 2 || has("gui_running")
@@ -40,6 +42,7 @@ nnoremap <silent> <C-Left> <c-w>h
 nnoremap <silent> <C-Up> <c-w>k
 nnoremap <silent> <C-Down> <c-w>j
 
+autocmd Filetype xml setlocal ts=2 sts=2 sw=2
 autocmd Filetype html setlocal ts=2 sts=2 sw=2
 autocmd Filetype htmldjango setlocal ts=2 sts=2 sw=2
 
@@ -48,8 +51,10 @@ let g:pymode_lint_onfly = 1
 let g:pymode_lint_unmodified = 1
 let g:pymode_lint_on_write = 1
 let g:pymode_lint_ignore = "D101,D102,D103,D205,D400,E731"
+let g:pymode_options_max_line_length = 79
 let g:pymode_rope_goto_definition_cmd = 'e'
 let g:pymode_rope = 0
+autocmd FileType python set nonumber
 
 let g:neocomplete#enable_at_startup = 1
 let g:neocomplete#enable_fuzzy_completion = 0

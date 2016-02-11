@@ -1,4 +1,5 @@
---pager=less -r
+--pager=less -r -S
 --context=3
 --ignore-dir=.ropeproject
 --ignore-file=ext:log
+--ignore-file=is:.coverage

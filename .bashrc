@@ -28,6 +28,7 @@ export HISTFILESIZE=10000
 export HISTTIMEFORMAT="%h %d %H:%M:%S "
 PROMPT_COMMAND="$PROMPT_COMMAND; history -a"
 . /usr/bin/virtualenvwrapper.sh
+. /usr/lib/z.sh
 
 TF_ALIAS=fuck alias fuck='eval $(thefuck $(fc -ln -1)); history -r'
 
