@@ -69,3 +69,6 @@ let g:neocomplete#force_omni_input_patterns.python =
     \ '\%([^. \t]\.\|^\s*@\|^\s*from\s.\+import \|^\s*from \|^\s*import \)\w*'
 
 set foldlevelstart=20
+
+" Allow saving of files as sudo when I forgot to start vim using sudo.
+cmap w!! w !sudo tee > /dev/null %
