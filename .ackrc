@@ -2,4 +2,9 @@
 --context=3
 --ignore-dir=.ropeproject
 --ignore-file=ext:log
+--ignore-file=ext:svg
+--ignore-file=ext:edn
+--ignore-file=ext:pickle
+--ignore-file=is:jstests.xml
 --ignore-file=is:.coverage
+--ignore-file=is:nosetests.xml

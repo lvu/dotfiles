@@ -1,0 +1,16 @@
+# xmodmap ~/.Xmodmap
+xrdb -merge .Xresources
+kbdd
+trayer --edge top --align right --SetDockType true --SetPartialStrut true \
+ --expand true --width 10 --transparent true --tint 0x191970 --height 24 &
+thunar --daemon &
+xcompmgr &
+
+feh --bg-scale /home/lvu/heavy/photo/droplet.jpg &
+pasystray &
+wicd-gtk --tray &
+xscreensaver -no-splash &
+chromium --app=https://getgoing.slack.com &
+chromium --app=https://messenger.com &
+keepass &
+( sleep 10 && /usr/bin/skype ) &

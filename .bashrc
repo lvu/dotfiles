@@ -11,7 +11,7 @@ alias sqlplus='rlwrap sqlplus'
 alias sml='rlwrap sml'
 alias pyack='ack --python'
 alias pyag='ag --python'
-alias vim='/usr/bin/launch-python-vim.sh'
+# alias vim='/usr/bin/launch-python-vim.sh'
 alias :e='vim'
 PS1='[\u@\h \W]\$ '
 export ORAENV_ASK=NO
@@ -26,6 +26,7 @@ export MAKEFLAGS='-j 8'
 export HISTSIZE=10000
 export HISTFILESIZE=10000
 export HISTTIMEFORMAT="%h %d %H:%M:%S "
+export _JAVA_AWT_WM_NONREPARENTING=1
 PROMPT_COMMAND="$PROMPT_COMMAND; history -a"
 . /usr/bin/virtualenvwrapper.sh
 . /usr/lib/z.sh

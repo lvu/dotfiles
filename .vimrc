@@ -4,16 +4,19 @@ set nocompatible
 filetype off                   " required!
 set rtp+=~/.vim/bundle/Vundle.vim
 call vundle#begin()
-Plugin 'gmarik/Vundle.vim'
-Plugin 'mileszs/ack.vim'
-Plugin 'klen/python-mode'
-Plugin 'git://git.wincent.com/command-t.git'
-Plugin 'jlanzarotta/bufexplorer'
-Plugin 'tpope/vim-surround'
-Plugin 'tpope/vim-fugitive'
-Plugin 'tpope/vim-sensible'
+" Plugin 'klen/python-mode'
 Plugin 'Shougo/neocomplete.vim'
 Plugin 'davidhalter/jedi-vim'
+Plugin 'git://git.wincent.com/command-t.git'
+Plugin 'gmarik/Vundle.vim'
+Plugin 'hynek/vim-python-pep8-indent'
+Plugin 'jlanzarotta/bufexplorer'
+Plugin 'mileszs/ack.vim'
+Plugin 'scrooloose/syntastic'
+Plugin 'tpope/vim-fugitive'
+Plugin 'tpope/vim-sensible'
+Plugin 'tpope/vim-surround'
+Plugin 'trusktr/seti.vim'
 call vundle#end()
 filetype plugin indent on     " required! 
 
@@ -22,18 +25,7 @@ set hidden
 set spell spelllang=en_us
 set expandtab
 set shiftwidth=4
-colorscheme peachpuff
-
-if &t_Co > 2 || has("gui_running")
-	set hlsearch
-endif
-
-hi clear SpellBad
-hi clear SpellLocal
-hi clear SpellRare
-hi SpellBad cterm=inverse
-hi SpellLocal cterm=italic
-hi SpellRare cterm=underline
+set hlsearch
 
 nmap <F5> <Esc>:BufExplorer<cr>
 
@@ -46,15 +38,11 @@ autocmd Filetype xml setlocal ts=2 sts=2 sw=2
 autocmd Filetype html setlocal ts=2 sts=2 sw=2
 autocmd Filetype htmldjango setlocal ts=2 sts=2 sw=2
 
-let g:pymode_lint_checkers = ['pyflakes', 'pep8', 'pep257']
-let g:pymode_lint_onfly = 1
-let g:pymode_lint_unmodified = 1
-let g:pymode_lint_on_write = 1
-let g:pymode_lint_ignore = "D101,D102,D103,D205,D400,E731"
-let g:pymode_options_max_line_length = 79
-let g:pymode_rope_goto_definition_cmd = 'e'
-let g:pymode_rope = 0
-autocmd FileType python set nonumber
+let g:syntastic_python_checkers = ['flake8']
+let g:syntastic_aggregate_errors = 1
+let g:syntastic_always_populate_loc_list = 1
+let g:syntastic_auto_loc_list = 1
+autocmd FileType python setlocal colorcolumn=80
 
 let g:neocomplete#enable_at_startup = 1
 let g:neocomplete#enable_fuzzy_completion = 0
@@ -72,3 +60,20 @@ set foldlevelstart=20
 
 " Allow saving of files as sudo when I forgot to start vim using sudo.
 cmap w!! w !sudo tee > /dev/null %
+
+colorscheme seti
+
+fun! s:highlight()
+    hi clear SpellBad
+    hi clear SpellLocal
+    hi clear SpellRare
+    hi SpellBad ctermbg=53
+    hi SpellLocal ctermbg=53 cterm=underline
+    hi SpellRare ctermbg=89
+endfun
+
+augroup myplugin_highlight
+    autocmd!
+    autocmd ColorScheme * call s:highlight()
+augroup end
+call s:highlight()
