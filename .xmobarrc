@@ -4,17 +4,18 @@ Config
     , fgColor = "grey"
     , position = TopSize L 90 24
     , commands =
-        [ Run Cpu ["-m", "2", "-L","3","-H","50","--normal","green","--high","red"] 10
+        [ Run Cpu ["-m", "3"] 10
         , Run Memory ["-t","Mem: <usedratio>%"] 10
-        , Run Swap [] 10
         , Run BatteryP ["BAT0"]
-            [ "-t", "<watts>W, <left>% / <timeleft> <acstatus>"
+            [ "-t", "<watts>W <left>% <timeleft> <acstatus>"
+            , "-H", "40", "-L", "20"
+            , "-h", "grey", "-n", "#ff7070", "-l", "red"
             , "--"
             , "-O", "<fc=#88ff88>AC</fc>"
             , "-i", "<fc=#8888ff>--</fc>"
             , "-o", "<fc=#ffaaaa>DC</fc>"
             ] 50
-        , Run Date "%a %Y-%d-%m %H:%M" "date" 10
+        , Run Date "%a %Y-%m-%d %H:%M" "date" 10
         , Run StdinReader
         , Run CoreTemp ["-t", "Tcore: <core0>°C"] 10
         , Run DynNetwork ["-m", "4", "-t", "<dev>: <rx>KB↓<tx>KB↑"] 5
@@ -23,5 +24,5 @@ Config
         ]
     , sepChar = "%"
     , alignSep = "}{"
-    , template = "%StdinReader% }{ %dynnetwork% %wlan0wi% | %cpu% | %memory% * %swap% | %coretemp% | %battery% | <fc=#ee9a00>%date%</fc>  <fc=#88ff88>[%kbd%]</fc>"
+    , template = "%StdinReader% }{ %dynnetwork% %wlan0wi% | %cpu% | %memory% | %coretemp% | %battery% | %date%  <fc=#88ff88>[%kbd%]</fc>"
     }

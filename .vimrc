@@ -17,6 +17,8 @@ Plugin 'tpope/vim-fugitive'
 Plugin 'tpope/vim-sensible'
 Plugin 'tpope/vim-surround'
 Plugin 'trusktr/seti.vim'
+Plugin 'altercation/vim-colors-solarized'
+Plugin 'Lokaltog/vim-distinguished'
 call vundle#end()
 filetype plugin indent on     " required! 
 
@@ -61,7 +63,7 @@ set foldlevelstart=20
 " Allow saving of files as sudo when I forgot to start vim using sudo.
 cmap w!! w !sudo tee > /dev/null %
 
-colorscheme seti
+colorscheme distinguished
 
 fun! s:highlight()
     hi clear SpellBad
