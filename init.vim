@@ -1,6 +1,6 @@
 set runtimepath+=~/.config/nvim/dein/repos/github.com/Shougo/dein.vim
-let g:python_host_prog = '/Users/valentynl/.virtualenvs/nvim2/bin/python'
-let g:python3_host_prog = '/Users/valentynl/.virtualenvs/nvim3/bin/python'
+let g:python_host_prog = '/Users/vlavrinenko/.virtualenvs/nvim2/bin/python'
+let g:python3_host_prog = '/Users/vlavrinenko/.virtualenvs/nvim3/bin/python'
 
 " Required:
 if dein#load_state('~/.config/nvim/dein')
@@ -62,6 +62,8 @@ let g:deoplete#enable_at_startup = 1
 autocmd FileType python setlocal omnifunc=jedi#completions
 let g:jedi#completions_enabled = 0
 let g:jedi#auto_vim_configuration = 0
+let g:jedi#show_call_signatures = "2"
+let g:jedi#goto_command = "gd"
 
 call neomake#configure#automake('w')
 let g:neomake_python_enabled_makers = ['flake8', 'python']
