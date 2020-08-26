@@ -1,0 +1,17 @@
+[submodule ".vim/pack/lvu/start/vim-distinguished"]
+	path = .vim/pack/lvu/start/vim-distinguished
+	url = https://github.com/Lokaltog/vim-distinguished
+[submodule ".vim/pack/lvu/start/bufexplorer"]
+	path = .vim/pack/lvu/start/bufexplorer
+	url = https://github.com/jlanzarotta/bufexplorer
+[submodule ".vim/pack/lvu/start/coc.nvim"]
+	path = .vim/pack/lvu/start/coc.nvim
+	url = https://github.com/neoclide/coc.nvim.git
+[submodule "coc.nvim"]
+	branch = release
+[submodule ".vim/pack/lvu/start/vim-sensible"]
+	path = .vim/pack/lvu/start/vim-sensible
+	url = https://github.com/tpope/vim-sensible
+[submodule ".vim/pack/lvu/start/vim-fugitive"]
+	path = .vim/pack/lvu/start/vim-fugitive
+	url = https://github.com/tpope/vim-fugitive
