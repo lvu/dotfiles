@@ -15,3 +15,6 @@
 [submodule ".vim/pack/lvu/start/vim-fugitive"]
 	path = .vim/pack/lvu/start/vim-fugitive
 	url = https://github.com/tpope/vim-fugitive
+[submodule ".vim/pack/lvu/start/vim-airline"]
+	path = .vim/pack/lvu/start/vim-airline
+	url = https://github.com/vim-airline/vim-airline
