@@ -13,6 +13,10 @@ nnoremap <silent> <C-Left> <c-w>h
 nnoremap <silent> <C-Up> <c-w>k
 nnoremap <silent> <C-Down> <c-w>j
 
+map <C-n> :NERDTreeToggle<CR>
+map <C-m> :NERDTreeFind<CR>
+let NERDTreeIgnore = ['\.pyc$', '^\.']
+
 autocmd FileType python setlocal colorcolumn=80
 
 set foldlevelstart=20
@@ -28,7 +32,7 @@ fun! s:highlight()
     hi SpellRare ctermbg=89
 endfun
 
-augroup myplugin_highlight
+augroup my_highlight
     autocmd!
     autocmd ColorScheme * call s:highlight()
 augroup end
