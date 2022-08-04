@@ -6,6 +6,24 @@ set shiftwidth=4
 set hlsearch
 set signcolumn=yes
 
+" Plugins
+let data_dir = has('nvim') ? stdpath('data') . '/site' : '~/.vim'
+if empty(glob(data_dir . '/autoload/plug.vim'))
+  silent execute '!curl -fLo '.data_dir.'/autoload/plug.vim --create-dirs  https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim'
+  autocmd VimEnter * PlugInstall --sync | source $MYVIMRC
+endif
+
+call plug#begin()
+" Plug 'vim-airline/vim-airline'
+Plug 'Lokaltog/vim-distinguished'
+Plug 'jlanzarotta/bufexplorer'
+Plug 'neoclide/coc.nvim', {'do': 'yarn install --frozen-lockfile; read'}
+Plug 'preservim/nerdtree'
+Plug 'tpope/vim-commentary'
+Plug 'tpope/vim-fugitive'
+Plug 'tpope/vim-sensible'
+call plug#end()
+
 nmap <leader>b <Esc>:BufExplorer<cr>
 
 nnoremap <silent> <C-Right> <c-w>l

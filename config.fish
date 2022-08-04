@@ -1,7 +1,3 @@
-# export PATH="/usr/local/opt/python/libexec/bin:$PATH"
-# eval (python3 -m virtualfish auto_activation global_requirements)
-eval (docker-machine env default)
-
 # alias vim (which nvim)
 
 alias ag "ag --hidden --pager 'less -R'"
