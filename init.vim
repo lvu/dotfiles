@@ -1,92 +1,113 @@
-set runtimepath+=~/.config/nvim/dein/repos/github.com/Shougo/dein.vim
-let g:python_host_prog = '/Users/vlavrinenko/.virtualenvs/nvim2/bin/python'
-let g:python3_host_prog = '/Users/vlavrinenko/.virtualenvs/nvim3/bin/python'
-
-" Required:
-if dein#load_state('~/.config/nvim/dein')
-  call dein#begin('~/.config/nvim/dein')
-
-  " Let dein manage dein
-  " Required:
-  call dein#add('~/.config/nvim/dein/repos/github.com/Shougo/dein.vim')
-
-  " Add or remove your plugins here:
-	call dein#add('Shougo/deoplete.nvim')
-	call dein#add('davidhalter/jedi-vim')
-	call dein#add('zchee/deoplete-jedi')
-	call dein#add('kien/ctrlp.vim')
-	call dein#add('hynek/vim-python-pep8-indent')
-	call dein#add('jlanzarotta/bufexplorer')
-	call dein#add('mileszs/ack.vim')
-	" call dein#add('scrooloose/syntastic')
-	call dein#add('neomake/neomake')
-	call dein#add('tpope/vim-fugitive')
-	call dein#add('tpope/vim-sensible')
-	call dein#add('tpope/vim-surround')
-	call dein#add('trusktr/seti.vim')
-	call dein#add('altercation/vim-colors-solarized')
-	call dein#add('Lokaltog/vim-distinguished')
-	call dein#add('pangloss/vim-javascript')
-	call dein#add('fatih/vim-go')
-        call dein#add('zchee/deoplete-go', {'build': 'make'})
-
-  " Required:
-  call dein#end()
-  call dein#save_state()
+" Plugins
+let data_dir = has('nvim') ? stdpath('data') . '/site' : '~/.vim'
+if empty(glob(data_dir . '/autoload/plug.vim'))
+  silent execute '!curl -fLo '.data_dir.'/autoload/plug.vim --create-dirs  https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim'
+  autocmd VimEnter * PlugInstall --sync | source $MYVIMRC
 endif
 
-set backup
-set hidden
-set spell spelllang=en_us
-set expandtab
-set shiftwidth=4
-set hlsearch
+call plug#begin()
+" Plug 'vim-airline/vim-airline'
+Plug 'nvim-lua/plenary.nvim'       " LUA lib for other plugins
+Plug 'Lokaltog/vim-distinguished'  " Color scheme
+Plug 'preservim/nerdtree'          " File tree
+Plug 'tpope/vim-commentary'        " Commenting blocks
+Plug 'tpope/vim-fugitive'          " Git integration
+Plug 'nvim-telescope/telescope.nvim'  " Find in files and more
+Plug 'chrisbra/csv.vim'            " CSV support
 
-nmap <leader>b <Esc>:BufExplorer<cr>
+" LSP Support
+Plug 'neovim/nvim-lspconfig'
+Plug 'williamboman/mason.nvim'
+Plug 'williamboman/mason-lspconfig.nvim'
 
+" Autocompletion
+Plug 'hrsh7th/nvim-cmp'
+Plug 'hrsh7th/cmp-buffer'
+Plug 'hrsh7th/cmp-path'
+Plug 'saadparwaiz1/cmp_luasnip'
+Plug 'hrsh7th/cmp-nvim-lsp'
+Plug 'hrsh7th/cmp-nvim-lua'
+" Plug 'github/copilot.vim'
+
+"  Snippets
+Plug 'L3MON4D3/LuaSnip'
+Plug 'rafamadriz/friendly-snippets'
+
+" LSP defaults and autosetup
+Plug 'VonHeikemen/lsp-zero.nvim'
+
+" Scala LSP
+Plug 'scalameta/nvim-metals'
+
+" DB access
+Plug 'tpope/vim-dadbod'
+call plug#end()
+
+map <C-n> :NERDTreeToggle<CR>
+map <C-b> :NERDTreeFind<CR>
+let NERDTreeIgnore = ['\.pyc$', '^\.']
+
+colorscheme distinguished
+
+" Window movement
 nnoremap <silent> <C-Right> <c-w>l
 nnoremap <silent> <C-Left> <c-w>h
 nnoremap <silent> <C-Up> <c-w>k
 nnoremap <silent> <C-Down> <c-w>j
 
-autocmd Filetype xml setlocal ts=2 sts=2 sw=2
-autocmd Filetype html setlocal ts=2 sts=2 sw=2
-autocmd Filetype htmldjango setlocal ts=2 sts=2 sw=2
+" Telescope mappings
+nnoremap <leader>f <cmd>Telescope git_files<cr>
+nnoremap <leader>g <cmd>Telescope grep_string<cr>
+nnoremap <leader>l <cmd>Telescope live_grep<cr>
+nnoremap <leader>b <cmd>Telescope buffers<cr>
+nnoremap <leader>h <cmd>Telescope help_tags<cr>
+nnoremap <leader>c <cmd>Telescope commands<cr>
+nnoremap <leader>t <cmd>Telescope builtin<cr>
 
-autocmd Filetype go setlocal ts=4 sts=4 sw=4 noexpandtab
+" Excape to normal mode in terminal
+:tnoremap <Esc> <C-\><C-n>
 
-autocmd FileType python setlocal colorcolumn=80
+set mouse=
 
-let g:deoplete#enable_at_startup = 1
+lua <<EOF
 
-autocmd FileType python setlocal omnifunc=jedi#completions
-let g:jedi#completions_enabled = 0
-let g:jedi#auto_vim_configuration = 0
-let g:jedi#show_call_signatures = "2"
-let g:jedi#goto_command = "gd"
+-- Telescope setup
+require("telescope").setup {
+  pickers = {
+    buffers = {
+      mappings = {
+        i = {
+          ["<c-d>"] = "delete_buffer",
+        }
+      }
+    }
+  }
+}
 
-call neomake#configure#automake('w')
-let g:neomake_python_enabled_makers = ['flake8', 'python']
-let g:neomake_open_list = 2
+-- LSP-Zero setup
+local lsp = require('lsp-zero')
 
-set foldlevelstart=20
+lsp.preset('recommended')
+lsp.setup()
 
-" Allow saving of files as sudo when I forgot to start vim using sudo.
-cmap w!! w !sudo tee > /dev/null %
+-- Metals setup
+local lsp_on_attach = lsp.build_options('metals', {}).on_attach
+local capabilities = vim.lsp.protocol.make_client_capabilities()
+local metals_config = require("metals").bare_config()
+metals_config.settings = {
+  showImplicitArguments = true,
+  excludedPackages = { "akka.actor.typed.javadsl", "com.github.swagger.akka.javadsl" },
+}
+metals_config.on_attach = lsp_on_attach
+metals_config.capabilities = require("cmp_nvim_lsp").update_capabilities(capabilities)
 
-colorscheme distinguished
+local nvim_metals_group = vim.api.nvim_create_augroup("nvim-metals", { clear = true })
+vim.api.nvim_create_autocmd("FileType", {
+  pattern = { "scala", "sbt", "java" },
+  callback = function()
+    require("metals").initialize_or_attach(metals_config)
+  end,
+  group = nvim_metals_group,
+})
 
-fun! s:highlight()
-    hi clear SpellBad
-    hi clear SpellLocal
-    hi clear SpellRare
-    hi SpellBad ctermbg=53
-    hi SpellLocal ctermbg=53 cterm=underline
-    hi SpellRare ctermbg=89
-endfun
-
-augroup myplugin_highlight
-    autocmd!
-    autocmd ColorScheme * call s:highlight()
-augroup end
-call s:highlight()
+EOF
