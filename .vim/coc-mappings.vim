@@ -1,3 +1,36 @@
+" These default mappings should either go in your .vimrc or in a file that
+" you're going to source from your .vimrc. For example, you can copy this file
+" into your ~ directory and then put the following in your .vimrc to source it
+"
+" coc.nvim lsp mappings
+"if filereadable(expand("~/coc-mappings.vim"))
+"  source ~/coc-mappings.vim"
+"endif
+"
+"
+" If you're curious how to share this or your .vimrc with both vim and nvim,
+" you can find a great instructions about this here
+" https://neovim.io/doc/user/nvim.html#nvim-from-vim
+"
+" Finally, keep in mind that these are "suggested" settings. Play around with
+" them and change them to your liking.
+
+" If hidden is not set, TextEdit might fail.
+set hidden
+
+" Some servers have issues with backup files
+set nobackup
+set nowritebackup
+
+" You will have a bad experience with diagnostic messages with the default of 4000.
+set updatetime=300
+
+" Don't give |ins-completion-menu| messages.
+set shortmess+=c
+
+" Always show signcolumns
+set signcolumn=yes
+
 " Use tab for trigger completion with characters ahead and navigate.
 " Use command ':verbose imap <tab>' to make sure tab is not mapped by another plugin.
 inoremap <silent><expr> <TAB>
@@ -15,11 +48,6 @@ endfunction
 " Use <c-space> to trigger completion.
 inoremap <silent><expr> <c-space> coc#refresh()
 
-" Use <cr> to confirm completion, `<C-g>u` means break undo chain at current
-" position.
-" Coc only does snippet and additional edit on confirm.
-inoremap <expr> <cr> pumvisible() ? "\<C-y>" : "\<C-g>u\<CR>"
-
 " Use `[g` and `]g` to navigate diagnostics
 nmap <silent> [g <Plug>(coc-diagnostic-prev)
 nmap <silent> ]g <Plug>(coc-diagnostic-next)
@@ -30,8 +58,10 @@ nmap <silent> gy <Plug>(coc-type-definition)
 nmap <silent> gi <Plug>(coc-implementation)
 nmap <silent> gr <Plug>(coc-references)
 
-" Used to expand decorations in worksheets
-nmap <Leader>ws <Plug>(coc-metals-expand-decoration)
+" For Neovim only!  Used to expand decorations in worksheets
+if has('nvim')
+    nmap <Leader>ws <Plug>(coc-metals-expand-decoration)
+endif
 
 " Use K to either doHover or show documentation in preview window
 nnoremap <silent> K :call <SID>show_documentation()<CR>
@@ -70,14 +100,16 @@ nmap <leader>a  <Plug>(coc-codeaction-line)
 nmap <leader>qf  <Plug>(coc-fix-current)
 
 " Use `:Format` to format current buffer
-command! -nargs=0 Format :call CocAction('format')
+command! -nargs=0 Format :call CocActionAsync('format')
 
 " Use `:Fold` to fold current buffer
 command! -nargs=? Fold :call     CocAction('fold', <f-args>)
 
-" Trigger for code actions
+" For Neovim only!  Trigger for code actions
 " Make sure `"codeLens.enable": true` is set in your coc config
-nnoremap <leader>cl :<C-u>call CocActionAsync('codeLensAction')<CR>
+if has('nvim')
+    nnoremap <leader>cl :<C-u>call CocActionAsync('codeLensAction')<CR>
+endif
 
 " Show all diagnostics
 nnoremap <silent> <space>a  :<C-u>CocList diagnostics<cr>
@@ -98,8 +130,7 @@ nnoremap <silent> <space>p  :<C-u>CocListResume<CR>
 
 " Notify coc.nvim that <enter> has been pressed.
 " Currently used for the formatOnType feature.
-inoremap <silent><expr> <cr> pumvisible() ? coc#_select_confirm()
-      \: "\<C-g>u\<CR>\<c-r>=coc#on_enter()\<CR>"
+inoremap <expr> <cr> coc#pum#visible() ? coc#_select_confirm() : "\<CR>"
 
 " Toggle panel with Tree Views
 nnoremap <silent> <space>t :<C-u>CocCommand metals.tvp<CR>
